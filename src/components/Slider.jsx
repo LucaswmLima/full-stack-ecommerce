@@ -59,8 +59,8 @@ const Slider = () => {
         <ArrowLeftOutlined />
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
-        {sliderItems.map((item) => (
-          <Slide
+        {sliderItems.map((item,index) => (
+          <Slide key={index}
             img={item.img}
             title={item.title}
             desc={item.desc}

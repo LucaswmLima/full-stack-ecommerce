@@ -2,6 +2,7 @@ import { Search, ShoppingCartOutlined } from "@mui/icons-material";
 import { Badge } from "@mui/material";
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { Link, NavLink } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -50,6 +51,10 @@ const Logo = styled.h1`
   font-weight: bold;
   ${mobile({ fontSize: "24px" })}
 `;
+const StyledLink = styled(NavLink)`
+  color: black;
+  text-decoration: none;
+`;
 
 /* RIGHT */
 const Right = styled.div`
@@ -79,7 +84,9 @@ const Navbar = () => {
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>E.SHOP</Logo>
+          <Logo>
+            <StyledLink to={"/"}> E.SHOP</StyledLink>
+          </Logo>
         </Center>
         <Right>
           <MenuItem>REGISTER</MenuItem>
