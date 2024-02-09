@@ -8,13 +8,15 @@ import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
+import { userRequest } from "../requestMethods";
+import { useNavigate } from "react-router";
 
 const KEY = import.meta.env.VITE_REACT_APP_STRIPE;
 console.log(KEY);
 
 const Container = styled.div``;
 const Wrapper = styled.div`
-  padding: 20px; 
+  padding: 20px;
   ${mobile({ padding: "10px" })}
 `;
 
@@ -146,6 +148,11 @@ const SummaryItem = styled.div`
   font-size: ${(props) => props.type === "total" && "24px"};
 `;
 
+const PaymentAdvise = styled.div`
+  margin: 30px 0px;
+  font-weight: 500;
+`;
+
 const SummaryItemText = styled.span``;
 
 const SummaryItemPrice = styled.span``;
@@ -161,9 +168,28 @@ const Button = styled.button`
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
+  const history = useNavigate();
+
   const onToken = (token) => {
     setStripeToken(token);
   };
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.total * 100,
+        });
+        alert("Ordem enviada com sucesso!");
+        history.push("/success", {
+          stripeData: res.data,
+          products: cart,
+        });
+      } catch {}
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken, cart.total, history]);
 
   return (
     <Container>
@@ -234,13 +260,23 @@ const Cart = () => {
               image="https://avatars.githubusercontent.com/u/1486366?v=4"
               billingAddress
               shippingAddress
-              description={`Your total is $${cart.total}`}
+              description={`Your total is $${cart.total} `}
               amount={cart.total * 100}
               token={onToken}
               stripeKey={KEY}
             >
               <Button>CHECKOUT NOW</Button>
             </StripeCheckout>
+            <PaymentAdvise>
+              To test the checkout use this mock data:
+              <br />
+              <br />
+              <b>Card Number:</b> 4242 4242 4242 4242
+              <br />
+              <b>CVC:</b> any 3 numbers
+              <br />
+              <b>Date:</b> Any date above the current date
+            </PaymentAdvise>
           </Summary>
         </Bottom>
       </Wrapper>
