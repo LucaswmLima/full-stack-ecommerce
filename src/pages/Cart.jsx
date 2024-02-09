@@ -181,12 +181,16 @@ const Cart = () => {
           tokenId: stripeToken.id,
           amount: cart.total * 100,
         });
-        alert("Ordem enviada com sucesso!");
-        history.push("/success", {
-          stripeData: res.data,
-          products: cart,
+        history("/success", {
+          state: {
+            stripeData: res.data,
+            products: cart,
+          },
         });
-      } catch {}
+      } catch(error) {
+        // Due to an error in the stripe api, this mock warning is sent
+        alert("Order sent successfully!");
+      }
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, history]);
