@@ -12,7 +12,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route Component={Home} path="/" />
-        <Route Component={ProductList} path="/products/:category" />
+        <Route Component={ProductList} path="/products/:category"/>
         <Route Component={ProductPage} path="/product/:id" />
         <Route Component={Cart} path="/cart" />
         <Route
