@@ -1,6 +1,9 @@
 import img1 from "../src/assets/Home/Slider/1.png";
 import img2 from "../src/assets/Home/Slider/2.png";
 import img3 from "../src/assets/Home/Slider/3.png";
+import allFashion from "../src/assets/Products/all-fashion.jpg"
+import womenFashion from "../src/assets/Products/women-fashion.jpg";
+import menFashion from "../src/assets/Products/men-fashion.jpg";
 
 export const sliderItems = [
   {
@@ -32,20 +35,20 @@ export const sliderItems = [
 export const categories = [
   {
     id: 1,
-    img: "https://img.freepik.com/fotos-gratis/casal-atraente-moda-posando-na-velha-rua-na-ensolarada-primavera-mulher-muito-bonita-e-seu-namorado-elegante-bonito-abracando-ao-ar-livre_273443-2587.jpg?w=1380&t=st=1707518681~exp=1707519281~hmac=890910d1717cb105ee7cdc7e746e38e1ecb2433f17b7d8a8918ca77c44c285cb",
+    img: allFashion,
     title: "ALL CLOTHES",
     category: "",
   },
   {
     id: 2,
-    img: "https://img.freepik.com/fotos-gratis/linda-senhora-de-oculos-escuros-segurando-um-smartphone_197531-15675.jpg?w=1380&t=st=1707518610~exp=1707519210~hmac=c43183a436a5df27c9d6c7c67dc05ef1b48b7b60bdce107f60eb19a7daf0d0ee",
+    img: womenFashion,
     title: "WOMEN'S FASHION",
     category: "women",
   },
   {
     id: 3,
     title: "MEN'S FASHION",
-    img: "https://img.freepik.com/fotos-gratis/retrato-de-modelo-feminino-bonito-e-elegante-hippie_158538-17970.jpg?w=1060&t=st=1707518511~exp=1707519111~hmac=0ab7d9eff9abfe00f00868fbae00d1223f4def3d66dbce333be739a77b971253",
+    img: menFashion,
     category: "man",
   },
 ];
