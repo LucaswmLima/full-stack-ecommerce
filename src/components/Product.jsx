@@ -5,6 +5,10 @@ import {
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../redux/cartRedux";
+import { publicRequest } from "../requestMethods";
 
 const Info = styled.div`
   opacity: 0;
@@ -68,16 +72,41 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
+  const dispatch = useDispatch();
+
+ const handleAddCart = () => {
+   try {
+     let sizeToAdd = "M";
+     if (item.size && item.size.includes("M")) {
+       sizeToAdd = "M";
+     } else if (item.size && item.size.length > 0) {
+       sizeToAdd = item.size[0];
+     }
+     const productToAdd = {
+       ...item,
+       quantity: 1,
+       color: item.color && item.color.length > 0 ? item.color[0] : "",
+       size: sizeToAdd,
+     };
+     dispatch(addProduct(productToAdd));
+     console.log(productToAdd);
+   } catch (err) {
+     console.log(err);
+   }
+ };
+
   return (
     <Container>
       <Circle />
       <Image src={item.img} />
       <Info>
+        <Link style={{ color: "black" }} onClick={handleAddCart}>
+          <Icon>
+            <ShoppingCartOutlined />
+          </Icon>
+        </Link>
         <Icon>
-          <ShoppingCartOutlined />
-        </Icon>
-        <Icon>
-          <Link to={`/product/${item._id}`}>
+          <Link style={{ color: "black" }} to={`/product/${item._id}`}>
             <SearchOutlined />
           </Link>
         </Icon>

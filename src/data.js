@@ -1,4 +1,4 @@
-import img1 from "../src/assets/Home/Slider/1.png"
+import img1 from "../src/assets/Home/Slider/1.png";
 import img2 from "../src/assets/Home/Slider/2.png";
 import img3 from "../src/assets/Home/Slider/3.png";
 
@@ -32,20 +32,21 @@ export const sliderItems = [
 export const categories = [
   {
     id: 1,
-    img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "SHIRT STYLE!",
-    category: "women",
+    img: "https://img.freepik.com/fotos-gratis/casal-atraente-moda-posando-na-velha-rua-na-ensolarada-primavera-mulher-muito-bonita-e-seu-namorado-elegante-bonito-abracando-ao-ar-livre_273443-2587.jpg?w=1380&t=st=1707518681~exp=1707519281~hmac=890910d1717cb105ee7cdc7e746e38e1ecb2433f17b7d8a8918ca77c44c285cb",
+    title: "ALL CLOTHES",
+    category: "",
   },
   {
     id: 2,
-    img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "LOUNGEWEAR LOVE",
-    category: "coat",
+    img: "https://img.freepik.com/fotos-gratis/linda-senhora-de-oculos-escuros-segurando-um-smartphone_197531-15675.jpg?w=1380&t=st=1707518610~exp=1707519210~hmac=c43183a436a5df27c9d6c7c67dc05ef1b48b7b60bdce107f60eb19a7daf0d0ee",
+    title: "WOMEN'S FASHION",
+    category: "women",
   },
   {
     id: 3,
-    img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    category: "jeans",
+    title: "MEN'S FASHION",
+    img: "https://img.freepik.com/fotos-gratis/retrato-de-modelo-feminino-bonito-e-elegante-hippie_158538-17970.jpg?w=1060&t=st=1707518511~exp=1707519111~hmac=0ab7d9eff9abfe00f00868fbae00d1223f4def3d66dbce333be739a77b971253",
+    category: "man",
   },
 ];
 
