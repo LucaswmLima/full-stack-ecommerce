@@ -76,9 +76,7 @@ const FilterColor = styled.div`
   border: 1px solid ${(props) => (props.selected ? "black" : "lightgray")};
   margin: 0px 5px;
   cursor: pointer;
-  ${(props) =>
-    props.selected &&
-    "border-width: 2px;"}
+  ${(props) => props.selected && "border-width: 2px;"}
 `;
 
 const FilterSize = styled.select`
@@ -123,6 +121,10 @@ const Button = styled.button`
   &:hover {
     background-color: #f8f4f4;
   }
+`;
+
+const AddRemovalButton = styled.div`
+  cursor: pointer;
 `;
 
 const ProductPage = () => {
@@ -177,7 +179,12 @@ const ProductPage = () => {
             <Filter>
               <FilterTitle>Color</FilterTitle>
               {product.color?.map((c) => (
-                <FilterColor selected={color === c} color={c} key={c} onClick={() => setColor(c)} />
+                <FilterColor
+                  selected={color === c}
+                  color={c}
+                  key={c}
+                  onClick={() => setColor(c)}
+                />
               ))}
             </Filter>
             <Filter>
@@ -194,9 +201,13 @@ const ProductPage = () => {
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove onClick={() => handleQuantity("dec")} />
+              <AddRemovalButton>
+                <Remove onClick={() => handleQuantity("dec")} />
+              </AddRemovalButton>
               <Amount>{quantity}</Amount>
-              <Add onClick={() => handleQuantity("inc")} />
+              <AddRemovalButton>
+                <Add onClick={() => handleQuantity("inc")} />
+              </AddRemovalButton>
             </AmountContainer>
             <Button onClick={handleAddCart}>ADD TO CART</Button>
           </AddContainer>

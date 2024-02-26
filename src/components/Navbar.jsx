@@ -87,7 +87,7 @@ const Navbar = () => {
         </Left>
         <Center>
           <Logo>
-            <StyledLink to={"/"}> E.SHOP</StyledLink>
+            <StyledLink to={"/"}>E.SHOP</StyledLink>
           </Logo>
         </Center>
         <Right>
