@@ -5,11 +5,12 @@ import Footer from "../components/Footer";
 import styled from "styled-components";
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useNavigate } from "react-router";
+import { addProduct, resetCart } from "../redux/cartRedux";
 
 const KEY = import.meta.env.VITE_REACT_APP_STRIPE;
 console.log(KEY);
@@ -86,6 +87,10 @@ const Details = styled.div`
 const ProductName = styled.span``;
 
 const ProductId = styled.span``;
+
+const AddRemovalButton = styled.div`
+  cursor: pointer;
+`;
 
 const ProductColor = styled.div`
   width: 20px;
@@ -169,7 +174,7 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const history = useNavigate();
-
+  const dispatch = useDispatch();
   const onToken = (token) => {
     setStripeToken(token);
   };
@@ -187,13 +192,21 @@ const Cart = () => {
             products: cart,
           },
         });
-      } catch(error) {
+      } catch (error) {
         // Due to an error in the stripe api, this mock warning is sent
         alert("Order sent successfully!");
       }
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, history]);
+
+  const handleQuantity = (type) => {
+    console.log("Em desenvolvimento");
+  };
+
+  const handleResetCart = () => {
+    dispatch(resetCart());
+  };
 
   return (
     <Container>
@@ -230,9 +243,13 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Add />
+                    <AddRemovalButton>
+                      <Remove onClick={() => handleQuantity("dec")} />
+                    </AddRemovalButton>
                     <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
+                    <AddRemovalButton>
+                      <Add onClick={() => handleQuantity("inc")} />
+                    </AddRemovalButton>
                   </ProductAmountContainer>
                   <ProductPrice>
                     {product.price * product.quantity}
@@ -281,6 +298,7 @@ const Cart = () => {
               <br />
               <b>Date:</b> Any date above the current date
             </PaymentAdvise>
+            <Button onClick={handleResetCart}>Reset Cart</Button>
           </Summary>
         </Bottom>
       </Wrapper>
