@@ -10,7 +10,11 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useNavigate } from "react-router";
-import { addProduct, resetCart } from "../redux/cartRedux";
+import {
+  resetCart,
+  increaseQuantity,
+  decreaseQuantity,
+} from "../redux/cartRedux";
 
 const KEY = import.meta.env.VITE_REACT_APP_STRIPE;
 console.log(KEY);
@@ -172,9 +176,10 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  const [stripeToken, setStripeToken] = useState(null);
-  const history = useNavigate();
   const dispatch = useDispatch();
+  const history = useNavigate();
+  const [stripeToken, setStripeToken] = useState(null);
+
   const onToken = (token) => {
     setStripeToken(token);
   };
@@ -200,8 +205,12 @@ const Cart = () => {
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, history]);
 
-  const handleQuantity = (type) => {
-    console.log("Em desenvolvimento");
+  const handleQuantity = (id, type, price) => {
+    if (type === "inc") {
+      dispatch(increaseQuantity({ id, price }));
+    } else if (type === "dec") {
+      dispatch(decreaseQuantity({ id, price }));
+    }
   };
 
   const handleResetCart = () => {
@@ -225,7 +234,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products.map((product) => (
-              <Product>
+              <Product key={product._id}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
@@ -244,11 +253,19 @@ const Cart = () => {
                 <PriceDetail>
                   <ProductAmountContainer>
                     <AddRemovalButton>
-                      <Remove onClick={() => handleQuantity("dec")} />
+                      <Remove
+                        onClick={() =>
+                          handleQuantity(product._id, "dec", product.price)
+                        }
+                      />
                     </AddRemovalButton>
                     <ProductAmount>{product.quantity}</ProductAmount>
                     <AddRemovalButton>
-                      <Add onClick={() => handleQuantity("inc")} />
+                      <Add
+                        onClick={() =>
+                          handleQuantity(product._id, "inc", product.price)
+                        }
+                      />
                     </AddRemovalButton>
                   </ProductAmountContainer>
                   <ProductPrice>

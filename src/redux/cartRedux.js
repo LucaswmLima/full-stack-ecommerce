@@ -5,32 +5,50 @@ const cartSlice = createSlice({
   initialState: {
     products: [],
     total: 0,
+    quantity: 0,
   },
   reducers: {
     addProduct: (state, action) => {
-      state.quantity += 1;
-      state.products.push(action.payload);
-      state.total += action.payload.price;
+      const productToAdd = action.payload;
+      state.products.push(productToAdd);
+      state.quantity += productToAdd.quantity;
+      state.total += productToAdd.price * productToAdd.quantity;
     },
-    removeProduct: (state, action) => {
-      state.quantity -= 1;
-      const index = state.products.findIndex(
-        (product) => product.id === action.payload.id
+    increaseQuantity: (state, action) => {
+      const { id } = action.payload;
+      const productToIncrease = state.products.find(
+        (product) => product._id === id
       );
-      if (index !== -1) {
-        const removedProduct = state.products[index];
-        state.products.splice(index, 1);
-        state.total -= removedProduct.price;
+      if (productToIncrease) {
+        productToIncrease.quantity += 1;
+        state.quantity += 1;
+        state.total += productToIncrease.price;
+      }
+    },
+    decreaseQuantity: (state, action) => {
+      const { id } = action.payload;
+      const productToDecrease = state.products.find(
+        (product) => product._id === id
+      );
+      if (productToDecrease && productToDecrease.quantity > 0) {
+        productToDecrease.quantity -= 1;
+        state.quantity -= 1;
+        state.total -= productToDecrease.price;
+        if (productToDecrease.quantity === 0) {
+          state.products = state.products.filter(
+            (product) => product._id !== id
+          );
+        }
       }
     },
     resetCart: (state) => {
-      state.quantity = 0;
       state.products = [];
       state.total = 0;
-      
+      state.quantity = 0;
     },
   },
 });
 
-export const { addProduct, removeProduct, resetCart } = cartSlice.actions;
+export const { addProduct, increaseQuantity, decreaseQuantity, resetCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;
