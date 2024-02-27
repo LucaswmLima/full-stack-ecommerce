@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   height: 60px;
@@ -75,14 +77,31 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
+  const [searchTerm, setSearchTerm] = useState("");
+  const history = useNavigate();
+
+  const handleSearch = () => {
+    if (searchTerm.trim() !== "") {
+      history(`/products?search=${searchTerm}`);
+    }
+    console.log("teste search");
+  };
+
   return (
     <Container>
       <Wrapper>
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
+            <Input
+              placeholder="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Search
+              style={{ color: "gray", fontSize: 16 }}
+              onClick={handleSearch}
+            />
           </SearchContainer>
         </Left>
         <Center>
