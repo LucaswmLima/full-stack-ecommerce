@@ -172,12 +172,14 @@ const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const history = useNavigate();
+  const quantity = useSelector((state) => state.cart.quantity);
   const [stripeToken, setStripeToken] = useState(null);
 
   const onToken = (token) => {
@@ -217,6 +219,10 @@ const Cart = () => {
     dispatch(resetCart());
   };
 
+  const handleContinueShopping = () => {
+    history(-1)
+  };
+
   return (
     <Container>
       <Announcement />
@@ -224,12 +230,14 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <TopButton onClick={handleContinueShopping}>
+            CONTINUE SHOPPING
+          </TopButton>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag ({quantity})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          {/*<TopButton type="filled">CHECKOUT NOW</TopButton>*/}
         </Top>
         <Bottom>
           <Info>
@@ -315,7 +323,7 @@ const Cart = () => {
               <br />
               <b>Date:</b> Any date above the current date
             </PaymentAdvise>
-            <Button onClick={handleResetCart}>Reset Cart</Button>
+            <Button onClick={handleResetCart}>RESET CART</Button>
           </Summary>
         </Bottom>
       </Wrapper>
