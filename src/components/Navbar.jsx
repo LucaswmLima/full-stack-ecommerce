@@ -83,8 +83,8 @@ const Navbar = () => {
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
       history(`/products?search=${searchTerm}`);
+      console.log("teste search");
     }
-    console.log("teste search");
   };
 
   return (
