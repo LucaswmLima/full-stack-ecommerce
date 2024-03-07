@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { popularProducts } from "../data";
 import Product from "./Product";
-import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Container = styled.div`
@@ -11,26 +11,26 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Products = ({ category, filters, sort }) => {
+const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    const getProduct = async () => {
+    const getProducts = async () => {
       try {
         const res = await axios.get(
-          category
-            ? `http://localhost:5000/api/products?category=${category}`
+          cat
+            ? `http://localhost:5000/api/products?category=${cat}`
             : "http://localhost:5000/api/products"
         );
         setProducts(res.data);
       } catch (err) {}
     };
-    getProduct();
-  }, [category]);
+    getProducts();
+  }, [cat]);
 
   useEffect(() => {
-    category &&
+    cat &&
       setFilteredProducts(
         products.filter((item) =>
           Object.entries(filters).every(([key, value]) =>
@@ -38,7 +38,7 @@ const Products = ({ category, filters, sort }) => {
           )
         )
       );
-  }, [products, category, filters]);
+  }, [products, cat, filters]);
 
   useEffect(() => {
     if (sort === "newest") {
@@ -55,13 +55,14 @@ const Products = ({ category, filters, sort }) => {
       );
     }
   }, [sort]);
+
   return (
     <Container>
-      {category
-        ? filteredProducts.map((item,index) => <Product item={item} key={index} />)
+      {cat
+        ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
         : products
             .slice(0, 8)
-            .map((item,index) => <Product item={item} key={index} />)}
+            .map((item) => <Product item={item} key={item.id} />)}
     </Container>
   );
 };
